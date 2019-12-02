@@ -6,12 +6,12 @@ public class Candy extends Sweet {
 
     private String flavor;
 
-    public Candy(String name, double weight, double price, String flavor){
+    public Candy(String name, double weight, double price, String flavor) {
         super(name, weight, price);
         this.flavor = flavor;
     }
 
-    public Candy(String name, double weight, double price){
+    public Candy(String name, double weight, double price) {
         super(name, weight, price);
     }
 
@@ -26,6 +26,8 @@ public class Candy extends Sweet {
 
     @Override
     public String toString() {
-        return "Candy "+ getName()+ ", cost "+ getCost()+", weight "+getWeight()+", flavor "+ this.flavor+" ";
+        String s = "Candy " + getName() + ", cost " + getCost() + ", weight " + getWeight();
+        if (this.flavor != null) return s + " " + this.flavor;
+        else return s;
     }
 }

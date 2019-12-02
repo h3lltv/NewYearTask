@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sweets.Sweet;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,7 +20,7 @@ public class GiftImpl implements Gift, Serializable {
 
     private static Logger log = LoggerFactory.getLogger(GiftImpl.class);
 
-    public void addSweet(Sweet s){
+    public void addSweet(Sweet s) {
         this.gift.add(s);
     }
 
@@ -26,11 +29,13 @@ public class GiftImpl implements Gift, Serializable {
                 .map(Sweet::getName)
                 .collect(Collectors.toList());
     }
+
     public List<Double> getPriceList() {
         return this.gift.stream()
                 .map(Sweet::getCost)
                 .collect(Collectors.toList());
     }
+
     public List<Double> getWeightList() {
         return this.gift.stream()
                 .map(Sweet::getWeight)
@@ -66,16 +71,15 @@ public class GiftImpl implements Gift, Serializable {
         if (giftHasSweetWithPrice(from, to)) {
             return this.gift
                     .stream()
-                    .filter(weight -> weight.getCost() >= from && weight.getCost() <= to)
+                    .filter(s -> s.getCost() >= from && s.getCost() <= to)
                     .collect(Collectors.toList());
-        }
-        else{
+        } else {
             log.error("Can't find sweets is such weight range");
             throw SweetNotFoundException.sweetNotFoundByPriceException(from, to);
         }
     }
 
-    public List<Sweet> getByPriceRange(double upTo){
+    public List<Sweet> getByPriceRange(double upTo) {
         return getByPriceRange(0, upTo);
     }
 
@@ -84,27 +88,25 @@ public class GiftImpl implements Gift, Serializable {
         if (giftHasSweetWithWeight(from, to)) {
             return this.gift
                     .stream()
-                    .filter(weight -> weight.getCost() >= from && weight.getCost() <= to)
+                    .filter(s -> s.getWeight() >= from && s.getWeight() <= to)
                     .collect(Collectors.toList());
-        }
-        else{
+        } else {
             log.error("Can't find sweets is such price range");
             throw SweetNotFoundException.sweetNotFoundByWeightException(from, to);
         }
     }
 
-    public List<Sweet> getByWeightRange(double upTo){
+    public List<Sweet> getByWeightRange(double upTo) {
         return getByWeightRange(0, upTo);
     }
 
     @Override
     public Optional<Sweet> getByName(String name) {
-        if(giftHasSweetWithName(name)){
+        if (giftHasSweetWithName(name)) {
             return this.gift
                     .stream()
                     .findAny();
-        }
-        else {
+        } else {
             return Optional.empty();
         }
     }
@@ -141,9 +143,22 @@ public class GiftImpl implements Gift, Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        this.gift.forEach(sb::append);
+        this.gift.forEach(sweet -> {
+            sb.append(sweet);
+            sb.append("\n");
+        });
         return new String(sb);
+    }
+
+    public void saveToFile(String s){
+        try (FileOutputStream fileOutputStream = new FileOutputStream(s+".out");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectOutputStream.writeObject(this);
+        }
+        catch (IOException e){
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
     }
 }

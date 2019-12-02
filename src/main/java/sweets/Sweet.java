@@ -4,14 +4,15 @@ import exceptions.SweetNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
+import java.io.*;
+import java.util.Properties;
 
 public class Sweet implements Serializable {
-    protected String name;
-    protected double weight;
-    protected double cost;
+    private String name;
+    double weight;
+    double cost;
 
-    protected static Logger log = LoggerFactory.getLogger(Sweet.class);
+    static Logger log = LoggerFactory.getLogger(Sweet.class);
 
     public Sweet(String name, double weight, double cost) {
         this.name = name;
@@ -52,5 +53,29 @@ public class Sweet implements Serializable {
     @Override
     public String toString() {
         return "Sweet "+ getName()+ ", cost "+ getCost()+", weight "+getWeight();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Sweet)) return false;
+
+        Sweet sweet = (Sweet) o;
+
+        if (Double.compare(sweet.getWeight(), getWeight()) != 0) return false;
+        if (Double.compare(sweet.getCost(), getCost()) != 0) return false;
+        return getName().equals(sweet.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getName().hashCode();
+        temp = Double.doubleToLongBits(getWeight());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(getCost());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

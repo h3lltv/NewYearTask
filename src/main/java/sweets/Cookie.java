@@ -34,6 +34,8 @@ public class Cookie extends Sweet {
     }
     @Override
     public String toString() {
-        return "Cookie "+ getName()+ ", cost "+ getCost()+", weight "+getWeight() + ", type " + type+" ";
+        String  s ="Cookie "+ getName()+ ", cost "+ getCost()+", weight "+getWeight() ;
+        if(this.type != null) return s+ ", type " + type+" ";
+        else return s;
     }
 }
