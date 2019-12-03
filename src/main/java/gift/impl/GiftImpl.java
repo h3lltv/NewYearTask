@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class GiftImpl implements Gift, Serializable {
 
-    public List<Sweet> gift = new ArrayList<>();
+    private List<Sweet> gift = new ArrayList<>();
 
     private static Logger log = LoggerFactory.getLogger(GiftImpl.class);
 
@@ -24,43 +24,43 @@ public class GiftImpl implements Gift, Serializable {
         this.gift.add(s);
     }
 
-    public List<String> getNameList() {
+    private List<String> getNameList() {
         return this.gift.stream()
                 .map(Sweet::getName)
                 .collect(Collectors.toList());
     }
 
-    public List<Double> getPriceList() {
+    private List<Double> getPriceList() {
         return this.gift.stream()
                 .map(Sweet::getCost)
                 .collect(Collectors.toList());
     }
 
-    public List<Double> getWeightList() {
+    private List<Double> getWeightList() {
         return this.gift.stream()
                 .map(Sweet::getWeight)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Sweet> orderByName() {
-        return this.gift
+    public void orderByName() {
+        this.gift = this.gift
                 .stream()
                 .sorted(Comparator.comparing(Sweet::getName))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Sweet> orderByValue() {
-        return this.gift
+    public void orderByPrice() {
+        this.gift = this.gift
                 .stream()
                 .sorted(Comparator.comparing(Sweet::getCost))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Sweet> orderByWeight() {
-        return this.gift
+    public void orderByWeight() {
+        this.gift = this.gift
                 .stream()
                 .sorted(Comparator.comparing(Sweet::getWeight))
                 .collect(Collectors.toList());
@@ -152,12 +152,11 @@ public class GiftImpl implements Gift, Serializable {
         return new String(sb);
     }
 
-    public void saveToFile(String s){
-        try (FileOutputStream fileOutputStream = new FileOutputStream(s+".out");
+    public void saveToFile(String s) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(s + ".out");
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(this);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
