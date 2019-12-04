@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class Reader {
     private static Logger log = LoggerFactory.getLogger(ObjectWriter.class);
-    private static final String PROP_PATH = "C:\\Users\\roma0\\OneDrive\\Рабочий стол\\Present\\src\\main\\resources\\file.properties";
+    private static final String PROP_PATH = "src/main/resources/file.properties";
 
     public static Gift createGiftFromFile(){
         GiftImpl gift = null;
