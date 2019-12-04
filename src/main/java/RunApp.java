@@ -17,13 +17,13 @@ public class RunApp  {
         g.addSweet(new Candy("CandyTwo", 0.9, 0.99, "Menthol"));
         g.addSweet(new Cookie("Cookie", 0.9, 0.99, "Type1"));
         g.addSweet(new Cookie("Cookie", 0.9, 0.9));
-//        System.out.println(g);
-//        g.orderByName();
-//        System.out.println(g);
-//        g.orderByPrice();
-//        System.out.println(g);
-//        g.orderByWeight();
-//        System.out.println(g);
+        System.out.println(g);
+        g.orderByName();
+        System.out.println(g);
+        g.orderByPrice();
+        System.out.println(g);
+        g.orderByWeight();
+        System.out.println(g);
         ObjectWriter.saveToFile(g);
         Sweet s = new Sweet("name", 0.5, 2.75);
         Gift g2 = Reader.createGiftFromFile();
@@ -31,28 +31,5 @@ public class RunApp  {
         ObjectWriter.saveToFile(s, "sweetOutput");
         Sweet sweet = Reader.createSweetFromFile();
         System.out.println(sweet);
-//        ObjectWriter.saveToFile(g);
-//        ObjectWriter.saveToFile(s);
-//        ObjectWriter.saveToFile(g,"file.txt");
-
-//        try (FileOutputStream fileOutputStream = new FileOutputStream("output.out");
-//             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-//
-//            objectOutputStream.writeObject(g);
-//            System.out.println("Gift weights: "+g.getTotalWeight());
-//            System.out.println("Gift costs "+g.getTotalCost());
-//
-//            FileInputStream fileInputStream = new FileInputStream("output.out");
-//            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-//            GiftImpl g1 = (GiftImpl) objectInputStream.readObject();
-//            System.out.println("Gift from serialization weights "+g1.getTotalWeight());
-//            System.out.println("Gift from serialization costs "+g1.getTotalCost());
-//            g1.addSweet(new Candy ("CandyTwo", 0.05, 0.1, "Cola"));
-//            System.out.println(g1);
-//            System.out.println("Gift from serialization weights "+g1.getTotalWeight());
-//            System.out.println("Gift from serialization costs "+g1.getTotalCost());
-//        } catch (IOException | ClassNotFoundException e) {
-//            System.out.println(Arrays.toString(e.getStackTrace()));
-//        }
     }
 }

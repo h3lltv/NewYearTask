@@ -7,9 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sweets.Sweet;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,26 +41,17 @@ public class GiftImpl implements Gift, Serializable {
 
     @Override
     public void orderByName() {
-        this.gift = this.gift
-                .stream()
-                .sorted(Comparator.comparing(Sweet::getName))
-                .collect(Collectors.toList());
+        this.gift.sort(Comparator.comparing(Sweet::getName));
     }
 
     @Override
     public void orderByPrice() {
-        this.gift = this.gift
-                .stream()
-                .sorted(Comparator.comparing(Sweet::getCost))
-                .collect(Collectors.toList());
+        this.gift.sort(Comparator.comparing(Sweet::getCost));
     }
 
     @Override
     public void orderByWeight() {
-        this.gift = this.gift
-                .stream()
-                .sorted(Comparator.comparing(Sweet::getWeight))
-                .collect(Collectors.toList());
+        this.gift.sort(Comparator.comparingDouble(Sweet::getWeight));
     }
 
     @Override
@@ -150,14 +138,5 @@ public class GiftImpl implements Gift, Serializable {
             sb.append("\n");
         });
         return new String(sb);
-    }
-
-    public void saveToFile(String s) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(s + ".out");
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-            objectOutputStream.writeObject(this);
-        } catch (IOException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
-        }
     }
 }
