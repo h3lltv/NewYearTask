@@ -13,7 +13,7 @@ public class Reader {
     private static Logger log = LoggerFactory.getLogger(ObjectWriter.class);
     private static final String PROP_PATH = "src/main/resources/file.properties";
 
-    public static Gift createGiftFromFile(){
+    public static Gift createGiftFromFile() {
         GiftImpl gift = null;
         try {
             Properties prop = new Properties();
@@ -22,17 +22,18 @@ public class Reader {
             try (FileInputStream fileInputStream = new FileInputStream(prop.getProperty("loadGiftFile"));
                  ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
                 gift = (GiftImpl) objectInputStream.readObject();
-
+                log.info("Object " + gift.getClass().getName() +" created from " + prop.getProperty("loadGiftFile")
+                );
             } catch (IOException | ClassNotFoundException e) {
                 log.error(e.getMessage());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage());
         }
         return gift;
     }
 
-    public static Sweet createSweetFromFile(){
+    public static Sweet createSweetFromFile() {
         Sweet sweet = null;
         try {
             Properties prop = new Properties();
@@ -41,11 +42,12 @@ public class Reader {
             try (FileInputStream fileInputStream = new FileInputStream(prop.getProperty("loadSweetFile"));
                  ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
                 sweet = (Sweet) objectInputStream.readObject();
-
+                log.info("Object " + sweet.getClass().getName()+" "+sweet.toString() + " created from " + prop.getProperty("loadGiftFile")
+                );
             } catch (IOException | ClassNotFoundException e) {
                 log.error(e.getMessage());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage());
         }
         return sweet;

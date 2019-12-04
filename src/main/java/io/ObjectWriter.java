@@ -19,6 +19,7 @@ public class ObjectWriter {
             try (FileOutputStream fileOutputStream = new FileOutputStream(prop.getProperty("saveGiftFile"));
                  ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
                 objectOutputStream.writeObject(o);
+                log.info("Object " + o.getClass().getName() + " saved to " + prop.getProperty("saveGiftFile"));
             } catch (IOException e) {
                 log.error(e.getMessage());
             }
@@ -31,6 +32,8 @@ public class ObjectWriter {
         try (FileOutputStream fileOutputStream = new FileOutputStream(fileName+".out");
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(o);
+            log.info("Object " + o.getClass().getName() + " saved to " + fileName + ".out");
+
         } catch (IOException e) {
             log.error(e.getMessage());
         }
