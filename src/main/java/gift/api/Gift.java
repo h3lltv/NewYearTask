@@ -12,11 +12,11 @@ public interface Gift {
 
     void orderByWeight();
 
-    List<Sweet> getByPriceRange(double from, double to);
+    List<?> getByPriceRange(double from, double to);
 
-    List<Sweet> getByWeightRange(double from, double to);
+    List<?> getByWeightRange(double from, double to);
 
-    Optional<Sweet> getByName(String name);
+    Optional<?> getByName(String name);
 
     double getTotalWeight();
 

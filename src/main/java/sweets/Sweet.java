@@ -1,6 +1,6 @@
 package sweets;
 
-import exceptions.SweetNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ public class Sweet implements Serializable {
     public String getName() {
         if (name.isEmpty()) {
             log.error("Incorrect name data. Value of name is empty!");
-            throw SweetNotFoundException.sweetNotFoundByNameException("xyi");
+            throw new IllegalArgumentException("Name can't be empty!");
         }
         else {
             return name;

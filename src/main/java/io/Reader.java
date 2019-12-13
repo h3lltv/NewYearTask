@@ -14,40 +14,37 @@ public class Reader {
     private static final String PROP_PATH = "src/main/resources/file.properties";
 
     public static Gift createGiftFromFile() {
-        GiftImpl gift = null;
-        try {
-            Properties prop = new Properties();
-            InputStream fis = new FileInputStream(PROP_PATH);
-            prop.load(fis);
-            try (FileInputStream fileInputStream = new FileInputStream(prop.getProperty("loadGiftFile"));
-                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-                gift = (GiftImpl) objectInputStream.readObject();
-                log.info("Object " + gift.getClass().getName() +" created from " + prop.getProperty("loadGiftFile")
-                );
-            } catch (IOException | ClassNotFoundException e) {
-                log.error(e.getMessage());
-            }
-        } catch (IOException e) {
+        Gift gift = null;
+        try (InputStream fileInputStream = new FileInputStream(getProperties().getProperty("loadGiftFile"));
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            gift = (GiftImpl) objectInputStream.readObject();
+            log.info("Object " + gift.getClass().getName() + " created from " + getProperties().getProperty("loadGiftFile")
+            );
+        } catch (IOException | ClassNotFoundException e) {
             log.error(e.getMessage());
         }
         return gift;
     }
 
-    public static Sweet createSweetFromFile() {
-        Sweet sweet = null;
+    private static Properties getProperties() {
+        Properties prop = new Properties();
         try {
-            Properties prop = new Properties();
             InputStream fis = new FileInputStream(PROP_PATH);
             prop.load(fis);
-            try (FileInputStream fileInputStream = new FileInputStream(prop.getProperty("loadSweetFile"));
-                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-                sweet = (Sweet) objectInputStream.readObject();
-                log.info("Object " + sweet.getClass().getName()+" "+sweet.toString() + " created from " + prop.getProperty("loadGiftFile")
-                );
-            } catch (IOException | ClassNotFoundException e) {
-                log.error(e.getMessage());
-            }
         } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return prop;
+    }
+
+    public static Sweet createSweetFromFile() {
+        Sweet sweet = null;
+        try (InputStream fileInputStream = new FileInputStream(getProperties().getProperty("loadSweetFile"));
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            sweet = (Sweet) objectInputStream.readObject();
+            log.info("Object " + sweet.getClass().getName() + " " + sweet.toString() + " created from " + getProperties().getProperty("loadGiftFile")
+            );
+        } catch (IOException | ClassNotFoundException e) {
             log.error(e.getMessage());
         }
         return sweet;

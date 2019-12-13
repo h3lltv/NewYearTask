@@ -95,6 +95,7 @@ public class GiftImpl implements Gift, Serializable {
                     .stream()
                     .findAny();
         } else {
+            log.error("Can't find sweets is such price range");
             return Optional.empty();
         }
     }
